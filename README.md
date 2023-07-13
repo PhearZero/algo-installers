@@ -1,6 +1,6 @@
 # algo-installers
 
-Experimental installers for Algorand. Proof of concent, still needs bundling and better build pipeline.
+Experimental installers for Algorand. Proof of concept, still needs bundling and better build pipeline.
 
 - [x] Windows x64
 - [ ] Linux x64
