@@ -16,5 +16,8 @@
   "license": "GPL-3.0-or-later",
   "devDependencies": {
     "electron": "^25.3.0"
+  },
+  "dependencies": {
+    "electron-fetch": "^1.9.1"
   }
 }

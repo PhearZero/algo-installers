@@ -2,8 +2,6 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>Hello World!</title>
 </head>
 <body>
@@ -11,5 +9,31 @@
 We are using Node.js <span id="node-version"></span>,
 Chromium <span id="chrome-version"></span>,
 and Electron <span id="electron-version"></span>.
+<div id="status"></div>
+<script>
+    let block = 0
+    let options = {
+        headers: {
+            "X-Algo-API-Token": "741b0de389adf9826609467b23ee7a0b95347018f6ff40c029f2c0548a5075b0",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    }
+    function nextBlock(round){
+        return fetch(`http://localhost:8080/v2/status/wait-for-block-after/${round}`, options)
+    }
+    async function loop(){
+        let r = await fetch('http://localhost:8080/v2/status', options).then(r=>{
+            console.log(r)
+            return r.json()
+        })
+        block = r['last-round']
+        document.getElementById("status").innerHTML = `<pre>${JSON.stringify(r, null, 2)}</pre>`
+        await nextBlock(block + 1)
+
+        loop()
+    }
+
+    loop()
+</script>
 </body>
 </html>

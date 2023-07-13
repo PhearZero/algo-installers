@@ -1,6 +1,11 @@
 # Algod/Goal
 .data
 !.data/genesis.json
+!.data/algod.token
+
+# Intellij
+.idea
+*.iml
 
 # Logs
 logs

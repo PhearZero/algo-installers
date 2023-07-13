@@ -3,19 +3,21 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-
+const child = require('child_process').execFile
 const createWindow = () => {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
         width: 800,
-        height: 600,
-        webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
-        }
+        height: 600
     })
 
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
+    mainWindow.webContents.openDevTools()
+    child(path.resolve('./bin/goal.exe'), ['node', 'start', '-d', '.data'], function(err, data) {
+        console.log(err)
+        console.log(data.toString());
+    });
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
