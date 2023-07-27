@@ -4,20 +4,37 @@
   "description": "Install algo stuffs",
   "main": "index.js",
   "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron-forge start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "concurrently \"npm:build:*\"",
+    "build:ctl": "./scripts/build-algoctrl.sh",
+    "build:kit": "./scripts/build-algokit-cli.sh",
+    "build-test": "npm run build:ctl && npm run build:kit",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "build": {
     "extraResources": [
       "bin/**/*"
     ]
   },
-  "author": "",
+  "author": "Michael Feher",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
+    "@electron-forge/cli": "^6.2.1",
+    "@electron-forge/maker-deb": "^6.2.1",
+    "@electron-forge/maker-rpm": "^6.2.1",
+    "@electron-forge/maker-squirrel": "^6.2.1",
+    "@electron-forge/maker-zip": "^6.2.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.2.1",
+    "alloctrl": "^0.1.9",
+    "concurrently": "^8.2.0",
     "electron": "^25.3.0"
   },
   "dependencies": {
-    "electron-fetch": "^1.9.1"
+    "electron-fetch": "^1.9.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "node-pty": "^1.0.0",
+    "xterm": "^5.2.1"
   }
 }

@@ -1,16 +1,26 @@
-// main.js
+const {ipcMain } = require('electron')
+const os = require('node:os');
+const pty = require('node-pty');
+
+const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const child = require('child_process').execFile
+
+
 const createWindow = () => {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
         width: 800,
-        height: 600
+        height: 600,
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
     })
-
+    // import('./packages/algoctrl/build/index.js')
     // and load the index.html of the app.
     mainWindow.loadFile('index.html')
     mainWindow.webContents.openDevTools()
@@ -19,8 +29,21 @@ const createWindow = () => {
         console.log(data.toString());
     });
 
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    const ptyProcess = pty.spawn(shell, [], {
+        name: 'xterm-color',
+        cols: 80,
+        rows: 30,
+        cwd: process.cwd(),
+        env: process.env
+    });
+
+    ptyProcess.onData((data) => {
+        mainWindow.webContents.send('message', data);
+        // process.stdout.write(data);
+    });
+    ipcMain.on('set-message', (event, msg) => {
+        ptyProcess.write(msg);
+    })
 }
 
 // This method will be called when Electron has finished
