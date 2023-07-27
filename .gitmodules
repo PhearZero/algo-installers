@@ -1,0 +1,12 @@
+[submodule "packages/algokit-cli"]
+	path = packages/algokit-cli
+	url = git@github.com:algorandfoundation/algokit-cli.git
+[submodule "packages/algoctrl"]
+	path = packages/algoctrl
+	url = git@github.com:AlgoNode/alloctrl.git
+[submodule "packages/go-algorand"]
+	path = packages/go-algorand
+	url = https://github.com/algorand/go-algorand
+[submodule "packages/algorun"]
+	path = packages/algorun
+	url = git@github.com:algorandfoundation/algorun.git
